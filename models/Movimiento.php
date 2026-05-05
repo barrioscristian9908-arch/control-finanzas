@@ -203,6 +203,52 @@
             $this->PDO->rollBack();
         }
 
+        public function filtrar($usuario_id, $tipo, $cuenta_id, $categoria_id, $desde, $hasta){
+
+            $query = "SELECT 
+                m.*, 
+                c.nombre AS cuenta, 
+                cat.nombre AS categoria
+            FROM movimientos m
+            LEFT JOIN cuentas c ON m.cuenta_id = c.id
+            LEFT JOIN categorias cat ON m.categoria_id = cat.id
+            WHERE m.usuario_id = ?";
+
+            $params = [$usuario_id];
+
+            if($tipo){
+                $query .= " AND m.tipo = ?";
+                $params[] = $tipo;
+            }
+
+            if($cuenta_id){
+                $query .= " AND cuenta_id = ?";
+                $params[] = $cuenta_id;
+            }
+
+            if($categoria_id){
+                $query .= " AND categoria_id = ?";
+                $params[] = $categoria_id;
+            }
+
+            if($desde){
+                $query .= " AND fecha >= ?";
+                $params[] = $desde;
+            }
+
+            if($hasta){
+                $query .= " AND fecha <= ?";
+                $params[] = $hasta;
+            }
+
+            $query .= " ORDER BY fecha DESC";
+
+            $stmt = $this->PDO->prepare($query);
+            $stmt->execute($params);
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
        
     }
 ?>

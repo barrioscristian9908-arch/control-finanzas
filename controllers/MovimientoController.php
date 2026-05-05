@@ -9,11 +9,39 @@ class MovimientoController{
         $this->model = new MovimientoModel();    
     }
 
+    // public function index(){
+
+    //     $usuario_id = $_SESSION["usuario_id"];
+
+    //     $movimientos = $this->model->getMovimientos($usuario_id);
+
+    //     require_once("c://xampp/htdocs/control_finanzas/views/movimientos/index.php");
+    // }
+
     public function index(){
 
         $usuario_id = $_SESSION["usuario_id"];
 
-        $movimientos = $this->model->getMovimientos($usuario_id);
+        // filtros
+        $tipo = $_GET['tipo'] ?? null;
+        $cuenta_id = $_GET['cuenta_id'] ?? null;
+        $categoria_id = $_GET['categoria_id'] ?? null;
+        $desde = $_GET['desde'] ?? null;
+        $hasta = $_GET['hasta'] ?? null;
+
+        // 👇 ahora usa filtrado
+        $movimientos = $this->model->filtrar(
+            $usuario_id,
+            $tipo,
+            $cuenta_id,
+            $categoria_id,
+            $desde,
+            $hasta
+        );
+
+        // para los selects
+        $cuentas = $this->model->getCuentas($usuario_id);
+        $categorias = $this->model->getCategorias($usuario_id);
 
         require_once("c://xampp/htdocs/control_finanzas/views/movimientos/index.php");
     }

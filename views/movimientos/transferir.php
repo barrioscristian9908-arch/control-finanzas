@@ -13,12 +13,12 @@
             <?php require_once("c://xampp/htdocs/control_finanzas/views/layouts/alert.php"); ?>
 
             <!-- 🔹 HEADER RESPONSIVE -->
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 mb-3">
+            <div class="d-flex flex-column flex-md-row justify-content-between gap-2 mb-4">
                 
                 <h3 class="mb-0">🔄 Transferir dinero</h3>
 
                 <a href="/control_finanzas/index.php?action=movimientos" 
-                   class="btn btn-secondary w-100 w-sm-auto">
+                   class="btn btn-secondary">
                     ← Volver
                 </a>
             </div>

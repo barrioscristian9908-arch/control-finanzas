@@ -35,6 +35,84 @@
             <div class="card shadow-sm">
                 <div class="card-body p-2 p-md-3">
 
+                <!-- 🔎 FILTROS -->
+                <div class="card shadow-sm mb-3">
+                    <div class="card-body p-2 p-md-3">
+
+                        <form method="GET" action="/control_finanzas/index.php">
+
+                            <input type="hidden" name="action" value="movimientos">
+
+                            <div class="row g-2">
+
+                                <!-- Tipo -->
+                                <div class="col-6 col-md-2">
+                                    <select name="tipo" class="form-select">
+                                        <option value="">Tipo</option>
+                                        <option value="ingreso" <?= ($_GET['tipo'] ?? '') == 'ingreso' ? 'selected' : '' ?>>
+                                            Ingreso
+                                        </option>
+                                        <option value="egreso" <?= ($_GET['tipo'] ?? '') == 'egreso' ? 'selected' : '' ?>>
+                                            Egreso
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <!-- Cuenta -->
+                                <div class="col-6 col-md-2">
+                                    <select name="cuenta_id" class="form-select">
+                                        <option value="">Cuenta</option>
+                                        <?php foreach($cuentas as $c): ?>
+                                            <option value="<?= $c['id'] ?>"
+                                                <?= ($_GET['cuenta_id'] ?? '') == $c['id'] ? 'selected' : '' ?>>
+                                                <?= $c['nombre'] ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+
+                                <!-- Categoría -->
+                                <div class="col-6 col-md-2">
+                                    <select name="categoria_id" class="form-select">
+                                        <option value="">Categoría</option>
+                                        <?php foreach($categorias as $cat): ?>
+                                            <option value="<?= $cat['id'] ?>"
+                                                <?= ($_GET['categoria_id'] ?? '') == $cat['id'] ? 'selected' : '' ?>>
+                                                <?= $cat['nombre'] ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+
+                                <!-- Fecha desde -->
+                                <div class="col-6 col-md-2">
+                                    <input type="date" name="desde" class="form-control"
+                                        value="<?= $_GET['desde'] ?? '' ?>">
+                                </div>
+
+                                <!-- Fecha hasta -->
+                                <div class="col-6 col-md-2">
+                                    <input type="date" name="hasta" class="form-control"
+                                        value="<?= $_GET['hasta'] ?? '' ?>">
+                                </div>
+
+                                <!-- Botones -->
+                                <div class="col-6 col-md-2 d-flex gap-2">
+                                    <button class="btn btn-primary w-100">Filtrar</button>
+
+                                    <a href="/control_finanzas/index.php?action=movimientos" 
+                                    class="btn btn-secondary w-100">
+                                        Limpiar
+                                    </a>
+                                </div>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
                     <div class="table-responsive">
                         <table class="table table-hover align-middle">
 
